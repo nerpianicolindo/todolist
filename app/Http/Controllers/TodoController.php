@@ -36,7 +36,12 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'text' => 'required'
+        ]);
+
+        Todo::create($request->all());
+        return redirect('/')->with('success', 'Todo creado satisfactoriamente');
     }
 
     /**
@@ -56,9 +61,9 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Todo $todo)
     {
-        //
+        return view('todos.edit', compact('todo'));
     }
 
     /**
@@ -68,9 +73,13 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Todo $todo)
     {
-        //
+        $this->validate($request, [
+            'text'=>'required'
+        ]);
+        $todo->update($request->all());
+        return redirect('/')->with('success', 'Todo actualizado');
     }
 
     /**
@@ -79,8 +88,10 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Todo $todo)
     {
-        //
+        $todo->delete();
+
+        return redirect('/')->with('success', 'Todo eliminado');
     }
 }
