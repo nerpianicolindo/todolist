@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Providers;
+
+use Collective\Html\FormFacade;
+use Illuminate\Support\ServiceProvider;
+
+class FormServiceProvider extends ServiceProvider
+{
+    /**
+     * Register services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
+    }
+
+    /**
+     * Bootstrap services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        Form::component('bsText', 'components.form.text', ['name', 'value' => null, 'attributes' => []]);
+    }
+}
